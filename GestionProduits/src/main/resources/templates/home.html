@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html  
+xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="layout"
+>
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
+</head>
+<body>
+<section layout:fragment="content">
+
+<div class="container">
+<div class="panel panel-info">
+<div class="panel-heading">
+
+<p class="text-center">Liste Des Produits
+ </p>
+ <form th:action="@{/home}"  method="get">
+ 
+ <input type="text" name="motCle" th:value="${motCle}">
+ <button type="submit" class="btn btn-primary">Chercher par désignation</button>
+ </form>
+</div>
+<div class="panel-body">
+<table class="table">
+
+<tr>
+<th>ID </th>
+<th> DÉSIGNATION</th>
+<th> PRIX</th>
+<th> QUANTITÉ</th>
+</tr>
+
+
+<tr th:each="p:${produit}">
+
+<td th:text="${p.id}"> </td>
+<td th:text="${p.designation}"> </td>
+<td th:text="${p.prix}"> </td>
+<td th:text="${p.quantite}"> </td>
+<td ><a class="btn btn-success" th:href="@{/admin/editer(id=${p.id})}" >Modifier </a> </td>
+<td > <a class="btn btn-danger" th:href="@{/admin/delete(id=${p.id},page=${CurrentPage},motCle=${motCle})}">Supprimer</a></td>
+</tr>
+
+
+
+
+</table>
+<ul class="nav nav-pills">
+
+<li th:each="p,st:${pages}" th:class="${CurrentPage==st.index?'active':''}">
+<a th:text="${st.index}" th:href="@{/admin/home(page=${st.index},motCle=${motCle})}"> </a>
+</li>
+
+</ul>
+
+</div>
+</div>
+</div>
+</section>
+
+</body>
+</html>
